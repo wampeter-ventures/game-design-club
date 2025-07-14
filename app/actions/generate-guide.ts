@@ -8,7 +8,7 @@ import { slugify } from "@/utils/slugify"
 const masterPromptTemplate = `# 🧹 Master Prompt: Create Game Design Worksheet Data
   
 ## 🎯 Objective
-Generate a JSON object containing all the data needed to populate a worksheet for a given board game. The data must be structured according to the specification below. The tone should be for smart, engaged 10-year-olds.
+Generate a JSON object containing all the data needed to populate a worksheet for a given board game. The data must be structured according to the specification below. The tone should be for smart, engaged 10-year-olds. Use the Exploding Kittens cheeky, energizing language, but toned down a bit. Focus on the core game mechanics as if you were a master game designer teaching the basics of game design to 10 year olds, in their language and with energy!
 
 ## 🧠 Input
 **Game to Analyze:** \`[GameName]\`
@@ -27,8 +27,8 @@ You must return ONLY a valid JSON object. Do not include any other text, markdow
   {
     "id": "number",
     "column": "one of ['biggest_ideas', 'more_mechanics', 'secret_sauce']",
-    "title": "string",
-    "subTitle": "string (formal game design term)",
+    "title": "string (an interesting concept or or design element or game mechanic from the game, with a fun title)",
+    "subTitle": "string (formal game design term, different from title)",
     "icon": "string (name of a lucide-react icon, e.g., 'Dice5')",
     "whatItMeans": "string (one fun, kid-friendly sentence)",
     "strategyTip": "string (one smart sentence of advice)",
