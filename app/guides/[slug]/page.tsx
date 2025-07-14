@@ -1,39 +1,25 @@
-import { allGuides } from "contentlayer/generated"
+import { createSupabaseServerClient } from "@/lib/supabase/server"
+import GuidePageClient, { type GuideData } from "./guide-page-client"
 import { notFound } from "next/navigation"
-import GuidePageClient from "./GuidePageClient"
 
-interface Props {
-  params: {
-    slug: string
-  }
-}
+export const revalidate = 0
 
-export async function generateStaticParams() {
-  return allGuides.map((guide) => ({ slug: guide.slug }))
-}
+export default async function GuidePage({ params }: { params: { slug: string } }) {
+  const supabase = createSupabaseServerClient()
 
-export async function generateMetadata({ params }: Props) {
-  const guide = allGuides.find((guide) => guide.slug === params.slug)
-  if (!guide) {
-    return {}
-  }
+  const { data: guide, error } = await supabase.from("guides").select("guide_data").eq("slug", params.slug).single()
 
-  return {
-    title: guide.title,
-    description: guide.description,
-  }
-}
-
-export default async function GuidePage({ params }: Props) {
-  const guide = allGuides.find((guide) => guide.slug === params.slug)
-
-  if (!guide) {
+  if (error || !guide) {
+    console.error("Error fetching guide:", error)
     notFound()
   }
 
-  return (
-    <div className="bg-yellow-100 min-h-screen">
-      <GuidePageClient guide={guide} />
-    </div>
-  )
+  const guideData = guide.guide_data as GuideData
+
+  if (!guideData) {
+    console.error("Guide data is null for slug:", params.slug)
+    notFound()
+  }
+
+  return <GuidePageClient guideData={guideData} />
 }
