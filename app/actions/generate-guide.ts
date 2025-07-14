@@ -55,7 +55,7 @@ You must return ONLY a valid JSON object. Do not include any other text, markdow
 
 ## ✅ Final Check
 - Is the output a single, valid JSON object and nothing else?
-- Have I incorporated the User Notes to guide the content?
+- Have I incorporated the User Notes to guide the content? this is critically important. go above and beyond to incorporate any user notes!
 - Are there exactly 9 mechanics?
 - Are there exactly 2 questions?
 
