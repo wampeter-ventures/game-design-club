@@ -441,7 +441,7 @@ export function HomePage() {
                         </div>
                       </div>
                       <p className="text-gray-800 text-xs leading-relaxed mb-4">
-                        Build. Boost. Blast or BOOM! How far can you fly?
+                        Build. Boost. Blast or BOOM! The more honor dice you earn, the farther we can fly...
                       </p>
                     </div>
                     <div className="relative group/btn mt-auto">
