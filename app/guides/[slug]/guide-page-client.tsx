@@ -75,79 +75,11 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
 
   return (
     <div className="min-h-screen bg-yellow-200 p-2 md:p-4 print:bg-white">
-      <div className="w-full max-w-7xl mx-auto bg-white border-4 border-black p-3 md:p-5 relative shadow-lg">
-        <header className="text-center mb-4 border-b-4 border-black pb-3">
-          <h1 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: "'Press Start 2P', monospace" }}>
-            {guideData.gameName}
-          </h1>
-          <p className="text-sm md:text-base text-gray-700" style={{ fontFamily: "'Press Start 2P', monospace" }}>
-            {guideData.gameSubtitle}
-          </p>
-        </header>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* BIGGEST IDEAS */}
-          <div>
-            <h2 className="flex items-center bg-orange-400 border-2 border-black text-white p-2 font-semibold text-sm md:text-base">
-              <Lucide.Brain className="w-5 h-5 mr-2" /> BIGGEST IDEAS
-            </h2>
-            <div className="flex flex-col gap-3 mt-2">
-              {col1.map((m) => (
-                <MechanicCard key={m.id} mechanic={m} color="text-orange-600" />
-              ))}
-            </div>
-          </div>
-
-          {/* MORE MECHANICS */}
-          <div>
-            <h2 className="flex items-center bg-blue-400 border-2 border-black text-white p-2 font-semibold text-sm md:text-base">
-              <Lucide.ListChecks className="w-5 h-5 mr-2" /> MORE MECHANICS
-            </h2>
-            <div className="flex flex-col gap-3 mt-2">
-              {col2.map((m) => (
-                <MechanicCard key={m.id} mechanic={m} color="text-blue-600" />
-              ))}
-            </div>
-          </div>
-
-          {/* SECRET SAUCE */}
-          <div>
-            <h2 className="flex items-center bg-purple-400 border-2 border-black text-white p-2 font-semibold text-sm md:text-base">
-              <Lucide.Search className="w-5 h-5 mr-2" /> SECRET SAUCE
-            </h2>
-            <div className="flex flex-col gap-3 mt-2">
-              {col3.map((m) => (
-                <MechanicCard key={m.id} mechanic={m} color="text-purple-600" />
-              ))}
-            </div>
-          </div>
-
-          {/* THINK & SHARE */}
-          <div className="md:col-span-3 mt-4 bg-pink-200 border-2 border-black p-3 rounded-md">
-            <h3 className="flex items-center font-semibold text-sm md:text-base mb-2">
-              <Lucide.Sparkles className="w-4 h-4 mr-1" /> THINK & SHARE!
-            </h3>
-            {guideData.thinkAndShare.map((q, i) => (
-              <div key={i} className="mb-2">
-                <p className="text-xs md:text-sm">🔹 {q}</p>
-                <div className="h-8 border-b border-slate-400 mt-1" />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <footer
-          className="text-center mt-6 pt-4 border-t-4 border-black text-xs md:text-sm"
-          style={{ fontFamily: "'Press Start 2P', monospace" }}
-        >
-          RDS Game Design Club • 2025
-          {guideData.creatorName && ` • Created by ${guideData.creatorName}`}
-        </footer>
-
+      <div className="w-full max-w-7xl mx-auto relative">
         {/* PRINT BUTTON */}
         <Button
           onClick={() => window.print()}
-          className="print:hidden absolute top-3 right-3 bg-black text-white hover:bg-slate-800"
+          className="print:hidden absolute top-0 right-0 bg-black text-white hover:bg-slate-800 mb-2"
           size="sm"
         >
           <Lucide.Printer className="w-4 h-4 mr-1" /> Print
@@ -156,11 +88,81 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
         {/* HOME LINK */}
         <Link
           href="/"
-          className="print:hidden absolute top-3 left-3 text-xs bg-black text-white px-2 py-1 border-2 border-white"
+          className="print:hidden absolute top-0 left-0 text-xs bg-black text-white px-2 py-1 border-2 border-white mb-2"
           style={{ fontFamily: "'Press Start 2P', monospace" }}
         >
           &lt; HOME
         </Link>
+
+        <div className="bg-white border-4 border-black p-3 md:p-5 shadow-lg mt-10">
+          <header className="text-center mb-4 border-b-4 border-black pb-3">
+            <h1 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: "'Press Start 2P', monospace" }}>
+              {guideData.gameName}
+            </h1>
+            <p className="text-sm md:text-base text-gray-700" style={{ fontFamily: "'Press Start 2P', monospace" }}>
+              {guideData.gameSubtitle}
+            </p>
+          </header>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* BIGGEST IDEAS */}
+            <div>
+              <h2 className="flex items-center bg-orange-400 border-2 border-black text-white p-2 font-semibold text-sm md:text-base">
+                <Lucide.Brain className="w-5 h-5 mr-2" /> BIGGEST IDEAS
+              </h2>
+              <div className="flex flex-col gap-3 mt-2">
+                {col1.map((m) => (
+                  <MechanicCard key={m.id} mechanic={m} color="text-orange-600" />
+                ))}
+              </div>
+            </div>
+
+            {/* MORE MECHANICS */}
+            <div>
+              <h2 className="flex items-center bg-blue-400 border-2 border-black text-white p-2 font-semibold text-sm md:text-base">
+                <Lucide.ListChecks className="w-5 h-5 mr-2" /> MORE MECHANICS
+              </h2>
+              <div className="flex flex-col gap-3 mt-2">
+                {col2.map((m) => (
+                  <MechanicCard key={m.id} mechanic={m} color="text-blue-600" />
+                ))}
+              </div>
+            </div>
+
+            {/* SECRET SAUCE */}
+            <div>
+              <h2 className="flex items-center bg-purple-400 border-2 border-black text-white p-2 font-semibold text-sm md:text-base">
+                <Lucide.Search className="w-5 h-5 mr-2" /> SECRET SAUCE
+              </h2>
+              <div className="flex flex-col gap-3 mt-2">
+                {col3.map((m) => (
+                  <MechanicCard key={m.id} mechanic={m} color="text-purple-600" />
+                ))}
+              </div>
+            </div>
+
+            {/* THINK & SHARE */}
+            <div className="md:col-span-3 mt-4 bg-pink-200 border-2 border-black p-3 rounded-md">
+              <h3 className="flex items-center font-semibold text-sm md:text-base mb-2">
+                <Lucide.Sparkles className="w-4 h-4 mr-1" /> THINK & SHARE!
+              </h3>
+              {guideData.thinkAndShare.map((q, i) => (
+                <div key={i} className="mb-2">
+                  <p className="text-xs md:text-sm">🔹 {q}</p>
+                  <div className="h-8 border-b border-slate-400 mt-1" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <footer
+            className="text-center mt-6 pt-4 border-t-4 border-black text-xs md:text-sm"
+            style={{ fontFamily: "'Press Start 2P', monospace" }}
+          >
+            RDS Game Design Club • 2025
+            {guideData.creatorName && ` • Created by ${guideData.creatorName}`}
+          </footer>
+        </div>
       </div>
     </div>
   )
