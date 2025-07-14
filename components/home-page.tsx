@@ -1,7 +1,8 @@
 "use client"
+
 import type React from "react"
-import { useEffect, useState, useRef, useTransition } from "react"
 import Image from "next/image"
+import { useEffect, useState, useRef, useTransition } from "react"
 import {
   Dice5,
   Mountain,
@@ -413,8 +414,67 @@ export function HomePage() {
                 className="text-2xl font-bold text-black mb-4 flex items-center justify-center gap-3 tracking-wide"
                 style={{ fontFamily: "var(--font-press-start-2p)" }}
               >
+                <Rocket className="w-6 h-6 text-black" />
+                GAMES WE'VE MADE
+              </h2>
+            </div>
+            <div className="bg-black border-4 border-black p-1 mb-12">
+              <div className="bg-pink-200 p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-white border-4 border-black p-4 group hover:bg-pink-50 transition-colors duration-200 relative flex flex-col">
+                    <div className="absolute top-0 left-0 w-2 h-2 bg-black"></div>
+                    <div className="absolute top-0 right-0 w-2 h-2 bg-black"></div>
+                    <div className="absolute bottom-0 left-0 w-2 h-2 bg-black"></div>
+                    <div className="absolute bottom-0 right-0 w-2 h-2 bg-black"></div>
+                    <div className="flex-grow">
+                      <div className="flex items-center gap-4 mb-2">
+                        <div className="p-2 bg-gray-200 border-2 border-black">
+                          <Rocket className="w-8 h-8 text-red-500" />
+                        </div>
+                        <div>
+                          <h3
+                            className="font-bold text-black text-sm tracking-wide"
+                            style={{ fontFamily: "var(--font-press-start-2p)" }}
+                          >
+                            LIFTOFF
+                          </h3>
+                        </div>
+                      </div>
+                      <p className="text-gray-800 text-xs leading-relaxed mb-4">
+                        Build. Boost. Blast or BOOM! How far can you fly?
+                      </p>
+                    </div>
+                    <div className="relative group/btn mt-auto">
+                      <div className="absolute inset-0 translate-y-2 bg-gray-700 border-4 border-black"></div>
+                      <a
+                        href="https://playliftoff.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block relative w-full bg-pink-500 border-4 border-black p-4 font-bold text-white transition-transform duration-100 group-hover/btn:translate-y-1 group-active/btn:translate-y-2 cursor-pointer text-center"
+                        style={{ fontFamily: "var(--font-press-start-2p)" }}
+                      >
+                        <div className="absolute top-0 left-0 w-2 h-2 bg-black"></div>
+                        <div className="absolute top-0 right-0 w-2 h-2 bg-black"></div>
+                        <div className="absolute bottom-0 left-0 w-2 h-2 bg-black"></div>
+                        <div className="absolute bottom-0 right-0 w-2 h-2 bg-black"></div>
+                        <span className="flex items-center justify-center text-sm">
+                          PLAY
+                          <Play className="ml-2 w-4 h-4" />
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <h2
+                className="text-2xl font-bold text-black mb-4 flex items-center justify-center gap-3 tracking-wide"
+                style={{ fontFamily: "var(--font-press-start-2p)" }}
+              >
                 <Wand2 className="w-6 h-6 text-black" />
-                CREATE & GENERATE
+                CREATE
               </h2>
             </div>
             <div className="bg-black border-4 border-black p-1 mb-12">
@@ -456,13 +516,18 @@ export function HomePage() {
                         <div className="absolute bottom-0 left-0 w-2 h-2 bg-black"></div>
                         <div className="absolute bottom-0 right-0 w-2 h-2 bg-black"></div>
                         <span className="flex items-center justify-center text-sm">
-                          START CREATING
+                          What Game?
                           <Wand2 className="ml-2 w-4 h-4" />
                         </span>
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white border-4 border-black p-4 relative group flex flex-col">
+                  <a
+                    href="https://v0.dev"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white border-4 border-black p-4 relative group hover:bg-green-100 transition-colors duration-200 flex flex-col"
+                  >
                     <div className="absolute top-0 left-0 w-2 h-2 bg-black"></div>
                     <div className="absolute top-0 right-0 w-2 h-2 bg-black"></div>
                     <div className="absolute bottom-0 left-0 w-2 h-2 bg-black"></div>
@@ -480,14 +545,14 @@ export function HomePage() {
                         </h3>
                       </div>
                       <p className="text-gray-800 text-xs leading-relaxed mb-4">
-                        Use AI to design and prototype a new game from scratch.
+                        Work with AI to design and prototype a new game from scratch. Even if that sounds outlandish,
+                        just try...you might surprise yourself!
                       </p>
                     </div>
                     <div className="relative group/btn mt-auto">
-                      <div className="absolute inset-0 translate-y-2 bg-gray-400 border-4 border-black"></div>
-                      <button
-                        disabled
-                        className="relative w-full bg-gray-500 border-4 border-black p-4 font-bold text-white"
+                      <div className="absolute inset-0 translate-y-2 bg-gray-700 border-4 border-black"></div>
+                      <div
+                        className="relative w-full bg-green-500 border-4 border-black p-4 font-bold text-white transition-transform duration-100 group-hover/btn:translate-y-1 group-active/btn:translate-y-2 cursor-pointer"
                         style={{ fontFamily: "var(--font-press-start-2p)" }}
                       >
                         <div className="absolute top-0 left-0 w-2 h-2 bg-black"></div>
@@ -495,12 +560,12 @@ export function HomePage() {
                         <div className="absolute bottom-0 left-0 w-2 h-2 bg-black"></div>
                         <div className="absolute bottom-0 right-0 w-2 h-2 bg-black"></div>
                         <span className="flex items-center justify-center text-sm">
-                          COMING SOON
+                          You can do it!
                           <Play className="ml-2 w-4 h-4" />
                         </span>
-                      </button>
+                      </div>
                     </div>
-                  </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -550,7 +615,12 @@ export function HomePage() {
           <footer className="mt-12 text-center">
             <button
               onClick={() => {
-                /* handleAdminToggle logic will be added back */
+                const password = prompt("Enter admin password:")
+                if (password === "gamedesign") {
+                  setIsAdmin(!isAdmin)
+                } else if (password) {
+                  alert("Incorrect password.")
+                }
               }}
               className="bg-black text-white border-2 border-white p-2 hover:bg-gray-700"
               style={{ fontFamily: "var(--font-press-start-2p)", fontSize: "10px" }}
