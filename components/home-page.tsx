@@ -29,20 +29,6 @@ import {
   deleteGuideAction,
 } from "@/app/actions/guide-actions"
 
-const gamesWeveMade = [
-  {
-    slug: "liftoff",
-    game_name: "Liftoff",
-    is_pinned: false,
-    guide_data: {
-      gameSubtitle: "The more Honor Dice we earn, the farther we can go...",
-      creatorName: "Dan",
-    },
-    external: true,
-    href: "https://playliftoff.com",
-  },
-]
-
 // Game-themed falling objects
 const fallingObjects = [
   {
@@ -95,8 +81,6 @@ interface Guide {
   game_name: string
   guide_data: any
   is_pinned: boolean
-  external?: boolean
-  href?: string
 }
 
 interface TetorisGameCardProps {
@@ -125,13 +109,8 @@ function TetorisGameCard({
   const description = guideData.gameSubtitle || `An AI-generated guide for ${game.game_name}.`
   const creatorName = guideData.creatorName
 
-  const handleNavigation = (e: React.MouseEvent) => {
-    e.preventDefault()
-    if (game.external && game.href) {
-      window.open(game.href, "_blank", "noopener,noreferrer")
-    } else {
-      router.push(`/guides/${game.slug}`)
-    }
+  const handleNavigation = () => {
+    router.push(`/guides/${game.slug}`)
   }
 
   const handlePinToggle = (e: React.MouseEvent) => {
@@ -158,7 +137,7 @@ function TetorisGameCard({
 
   return (
     <div className="bg-white border-4 border-black p-4 group hover:bg-yellow-50 transition-colors duration-200 relative flex flex-col">
-      {isAdmin && !game.external && (
+      {isAdmin && (
         <div className="absolute top-2 right-2 z-10 flex gap-2">
           <button onClick={handlePinToggle} className="p-1 bg-white border-2 border-black hover:bg-gray-200">
             {game.is_pinned ? <PinOff className="w-4 h-4" /> : <Pin className="w-4 h-4" />}
@@ -288,20 +267,6 @@ export function HomePage() {
     fetchGuides()
   }
 
-  const handleAdminToggle = () => {
-    if (isAdmin) {
-      setIsAdmin(false)
-    } else {
-      const password = window.prompt("Enter admin password:")
-      if (password === "RDS") {
-        setIsAdmin(true)
-      } else if (password !== null) {
-        // User entered something but it was wrong
-        alert("Incorrect password.")
-      }
-    }
-  }
-
   useEffect(() => {
     // Animation effect
     let lastTime = 0
@@ -350,6 +315,10 @@ export function HomePage() {
       <div ref={containerRef} className="min-h-screen relative overflow-hidden bg-yellow-300">
         {isAgreementsModalOpen && <AgreementsModal onClose={() => setIsAgreementsModalOpen(false)} />}
 
+        <div className="hidden md:block absolute top-4 right-4 z-30">
+          <AgreementsSticker onClick={() => setIsAgreementsModalOpen(true)} />
+        </div>
+
         <div className="fixed inset-0 pointer-events-none z-10 opacity-80">
           {blocks.map((block) => (
             <div
@@ -388,7 +357,7 @@ export function HomePage() {
         <div className="absolute bottom-0 right-0 w-8 h-8 bg-black z-30"></div>
 
         <div className="relative z-20 flex flex-col items-center p-8 min-h-screen">
-          <header className="text-center mb-8">
+          <header className="text-center mb-12">
             <h1
               className="text-2xl md:text-4xl font-bold text-black mb-4 tracking-wider"
               style={{ fontFamily: "var(--font-press-start-2p)" }}
@@ -401,77 +370,41 @@ export function HomePage() {
           </header>
 
           <main className="w-full max-w-6xl">
-            <div className="flex justify-center mb-8">
+            <div className="flex justify-center mb-8 md:hidden">
               <AgreementsSticker onClick={() => setIsAgreementsModalOpen(true)} />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
-              {/* Games We've Played Column */}
-              <div className="space-y-6">
-                <div className="text-center">
-                  <h2
-                    className="text-2xl font-bold text-black mb-4 flex items-center justify-center gap-3 tracking-wide"
-                    style={{ fontFamily: "var(--font-press-start-2p)" }}
-                  >
-                    <BookOpen className="w-6 h-6 text-black" />
-                    GAMES WE'VE PLAYED
-                  </h2>
-                </div>
-                <div className="bg-black border-4 border-black p-1">
-                  <div className="bg-yellow-200 p-6">
-                    {loading ? (
-                      <div className="flex justify-center items-center h-24">
-                        <Loader2 className="w-8 h-8 animate-spin text-yellow-700" />
-                      </div>
-                    ) : (
-                      <div className="grid gap-6">
-                        {pinnedGuides.map((game) => (
-                          <TetorisGameCard
-                            key={game.slug}
-                            game={game}
-                            actionText="LEARN"
-                            actionIcon={<BookOpen className="ml-2 w-4 h-4" />}
-                            buttonColor="bg-blue-500"
-                            isAdmin={isAdmin}
-                            onPinToggle={handlePinToggle}
-                            onDelete={handleDelete}
-                          />
-                        ))}
-                      </div>
-                    )}
+            <div className="text-center">
+              <h2
+                className="text-2xl font-bold text-black mb-4 flex items-center justify-center gap-3 tracking-wide"
+                style={{ fontFamily: "var(--font-press-start-2p)" }}
+              >
+                <BookOpen className="w-6 h-6 text-black" />
+                GAMES WE'VE PLAYED
+              </h2>
+            </div>
+            <div className="bg-black border-4 border-black p-1 mb-12">
+              <div className="bg-yellow-200 p-6">
+                {loading ? (
+                  <div className="flex justify-center items-center h-24">
+                    <Loader2 className="w-8 h-8 animate-spin text-yellow-700" />
                   </div>
-                </div>
-              </div>
-
-              {/* Games We've Made Column */}
-              <div className="space-y-6">
-                <div className="text-center">
-                  <h2
-                    className="text-2xl font-bold text-black mb-4 flex items-center justify-center gap-3 tracking-wide"
-                    style={{ fontFamily: "var(--font-press-start-2p)" }}
-                  >
-                    <Rocket className="w-6 h-6 text-black" />
-                    GAMES WE'VE MADE
-                  </h2>
-                </div>
-                <div className="bg-black border-4 border-black p-1">
-                  <div className="bg-pink-200 p-6">
-                    <div className="grid gap-6">
-                      {gamesWeveMade.map((game) => (
-                        <TetorisGameCard
-                          key={game.slug}
-                          game={game}
-                          actionText="PLAY"
-                          actionIcon={<Play className="ml-2 w-4 h-4" />}
-                          buttonColor="bg-pink-500"
-                          isAdmin={isAdmin}
-                          onPinToggle={handlePinToggle}
-                          onDelete={handleDelete}
-                        />
-                      ))}
-                    </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {pinnedGuides.map((game) => (
+                      <TetorisGameCard
+                        key={game.slug}
+                        game={game}
+                        actionText="LEARN"
+                        actionIcon={<BookOpen className="ml-2 w-4 h-4" />}
+                        buttonColor="bg-blue-500"
+                        isAdmin={isAdmin}
+                        onPinToggle={handlePinToggle}
+                        onDelete={handleDelete}
+                      />
+                    ))}
                   </div>
-                </div>
+                )}
               </div>
             </div>
 
@@ -481,7 +414,7 @@ export function HomePage() {
                 style={{ fontFamily: "var(--font-press-start-2p)" }}
               >
                 <Wand2 className="w-6 h-6 text-black" />
-                CREATE
+                CREATE & GENERATE
               </h2>
             </div>
             <div className="bg-black border-4 border-black p-1 mb-12">
@@ -523,7 +456,7 @@ export function HomePage() {
                         <div className="absolute bottom-0 left-0 w-2 h-2 bg-black"></div>
                         <div className="absolute bottom-0 right-0 w-2 h-2 bg-black"></div>
                         <span className="flex items-center justify-center text-sm">
-                          What Game?
+                          START CREATING
                           <Wand2 className="ml-2 w-4 h-4" />
                         </span>
                       </div>
@@ -616,7 +549,9 @@ export function HomePage() {
 
           <footer className="mt-12 text-center">
             <button
-              onClick={handleAdminToggle}
+              onClick={() => {
+                /* handleAdminToggle logic will be added back */
+              }}
               className="bg-black text-white border-2 border-white p-2 hover:bg-gray-700"
               style={{ fontFamily: "var(--font-press-start-2p)", fontSize: "10px" }}
             >

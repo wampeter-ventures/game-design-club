@@ -1,25 +1,27 @@
+import { notFound } from "next/navigation"
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 import GuidePageClient, { type GuideData } from "./guide-page-client"
-import { notFound } from "next/navigation"
 
+/**
+ * Server component — runs only on the server, so it can safely read
+ * SUPABASE_SERVICE_ROLE_KEY & SUPABASE_URL.  No client-side code here!
+ */
 export const revalidate = 0
 
-export default async function GuidePage({ params }: { params: { slug: string } }) {
+export default async function GuidePage({
+  params,
+}: {
+  params: { slug: string }
+}) {
   const supabase = createSupabaseServerClient()
 
-  const { data: guide, error } = await supabase.from("guides").select("guide_data").eq("slug", params.slug).single()
+  const { data, error } = await supabase.from("guides").select("guide_data").eq("slug", params.slug).single()
 
-  if (error || !guide) {
+  if (error || !data) {
     console.error("Error fetching guide:", error)
     notFound()
   }
 
-  const guideData = guide.guide_data as GuideData
-
-  if (!guideData) {
-    console.error("Guide data is null for slug:", params.slug)
-    notFound()
-  }
-
+  const guideData = data.guide_data as GuideData
   return <GuidePageClient guideData={guideData} />
 }
