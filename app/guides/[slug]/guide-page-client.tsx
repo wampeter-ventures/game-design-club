@@ -79,7 +79,7 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
         {/* PRINT BUTTON */}
         <Button
           onClick={() => window.print()}
-          className="print:hidden absolute top-0 right-0 bg-black text-white hover:bg-slate-800 mb-2"
+          className="print:hidden absolute top-2 right-2 bg-black text-white hover:bg-slate-800"
           size="sm"
         >
           <Lucide.Printer className="w-4 h-4 mr-1" /> Print
@@ -88,7 +88,7 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
         {/* HOME LINK */}
         <Link
           href="/"
-          className="print:hidden absolute top-0 left-0 text-xs bg-black text-white px-2 py-1 border-2 border-white mb-2"
+          className="print:hidden absolute top-2 left-2 text-xs bg-black text-white px-2 py-1 border-2 border-white"
           style={{ fontFamily: "'Press Start 2P', monospace" }}
         >
           &lt; HOME
