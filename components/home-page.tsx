@@ -710,7 +710,7 @@ export function HomePage() {
             <button
               onClick={() => {
                 const password = prompt("Enter admin password:")
-                if (password === "gamedesign") {
+                if (password === "RDS") {
                   const newAdminState = !isAdmin
                   setIsAdmin(newAdminState)
                   trackEvent("admin_mode_toggled", {

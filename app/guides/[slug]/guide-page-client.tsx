@@ -203,7 +203,6 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
             style={{ fontFamily: "'Press Start 2P', monospace" }}
           >
             RDS Game Design Club • 2025
-            {guideData.creatorName && ` • Created by ${guideData.creatorName}`}
           </footer>
         </div>
       </div>
