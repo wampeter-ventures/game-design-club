@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { Press_Start_2P } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { PostHogProvider } from "@/components/posthog-provider"
+import { PostHogProvider } from "./providers" // Updated import
 
 const pressStart2P = Press_Start_2P({
   weight: "400",
@@ -14,7 +14,7 @@ const pressStart2P = Press_Start_2P({
 export const metadata: Metadata = {
   title: "RDS Game Design Club",
   description: "Summer 2025 • Learn game design through play and analysis",
-    generator: 'v0.dev'
+  generator: "v0.dev",
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
