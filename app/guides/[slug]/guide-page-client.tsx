@@ -79,7 +79,7 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
         {/* PRINT BUTTON */}
         <Button
           onClick={() => window.print()}
-          className="print:hidden absolute top-2 right-2 bg-black text-white hover:bg-slate-800"
+          className="print:hidden absolute top-0 right-0 bg-black text-white hover:bg-slate-800 mb-2"
           size="sm"
         >
           <Lucide.Printer className="w-4 h-4 mr-1" /> Print
@@ -88,13 +88,13 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
         {/* HOME LINK */}
         <Link
           href="/"
-          className="print:hidden absolute top-2 left-2 text-xs bg-black text-white px-2 py-1 border-2 border-white"
+          className="print:hidden absolute top-0 left-0 text-xs bg-black text-white px-2 py-1 border-2 border-white mb-2"
           style={{ fontFamily: "'Press Start 2P', monospace" }}
         >
           &lt; HOME
         </Link>
 
-        <div className="bg-white border-4 border-black p-3 md:p-5 shadow-lg mt-10 print:mt-0 print:shadow-none print:w-full print:h-full">
+        <div className="bg-white border-4 border-black p-3 md:p-5 shadow-lg mt-10">
           <header className="text-center mb-4 border-b-4 border-black pb-3">
             <h1 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: "'Press Start 2P', monospace" }}>
               {guideData.gameName}

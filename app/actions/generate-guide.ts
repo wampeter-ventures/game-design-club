@@ -8,7 +8,7 @@ import { slugify } from "@/utils/slugify"
 const masterPromptTemplate = `# 🧹 Master Prompt: Create Game Design Worksheet Data
   
 ## 🎯 Objective
-Generate a JSON object containing all the data needed to populate a worksheet for a given board game. The data must be structured according to the specification below. The tone should be for smart, engaged 10-year-olds. Use the Exploding Kittens cheeky, energizing language, but toned down a bit. Focus on the core game mechanics as if you were a master game designer teaching the basics of game design to 10 year olds, in their language and with energy!
+Generate a JSON object containing all the data needed to populate a worksheet for a given board game. The data must be structured according to the specification below. Use the Exploding Kittens cheeky, energizing language, but toned down a bit. Focus on the core game mechanics as if you were a master game designer teaching the basics of game design to 10 year olds, in their language and with energy!
 
 ## 🧠 Input
 **Game to Analyze:** \`[GameName]\`
@@ -27,11 +27,11 @@ You must return ONLY a valid JSON object. Do not include any other text, markdow
   {
     "id": "number",
     "column": "one of ['biggest_ideas', 'more_mechanics', 'secret_sauce']",
-    "title": "string (an interesting concept or or design element or game mechanic from the game, with a fun title)",
+    "title": "string (an interesting concept or design element or game mechanic from the game, with a fun title)",
     "subTitle": "string (formal game design term, different from title)",
     "icon": "string (name of a lucide-react icon, e.g., 'Dice5')",
-    "whatItMeans": "string (one fun, kid-friendly sentence)",
-    "strategyTip": "string (one smart sentence of advice)",
+    "whatItMeans": "string (one fun, kid-friendly sentence with energy)",
+    "strategyTip": "string (one smart sentence of advice with enthusiasm)",
     "gameRule": "string (one sentence summarizing the rule in the game)"
   }
 ],
@@ -55,11 +55,13 @@ You must return ONLY a valid JSON object. Do not include any other text, markdow
 
 ## ✅ Final Check
 - Is the output a single, valid JSON object and nothing else?
-- Have I incorporated the User Notes to guide the content? this is critically important. go above and beyond to incorporate any user notes!
+- Have I incorporated the User Notes to guide the content? This is critically important. Go above and beyond to incorporate any user notes!
 - Are there exactly 9 mechanics?
 - Are there exactly 2 questions?
+- Does the language have that cheeky, energizing tone for smart 10-year-olds?
+- Am I teaching game design fundamentals in kid-friendly language?
 
-Ready? Let’s go!
+Ready? Let's go!
 `
 
 export async function generateGuideAction(formData: FormData) {

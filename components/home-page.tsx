@@ -169,7 +169,7 @@ function TetorisGameCard({
             >
               {game.game_name.toUpperCase()}
             </h3>
-            {creatorName && <p className="text-gray-600 text-xs tracking-wide">Created by {creatorName}</p>}
+            {creatorName && <p className="text-gray-600 text-xs tracking-wide hidden">Created by {creatorName}</p>}
           </div>
         </div>
         <p className="text-gray-800 text-xs leading-relaxed mb-4">{description}</p>
@@ -191,6 +191,82 @@ function TetorisGameCard({
             {actionIcon}
           </span>
         </button>
+      </div>
+    </div>
+  )
+}
+
+function MadeGameCard({
+  title,
+  description,
+  creator,
+  iconSrc,
+  href,
+  actionText,
+  actionIcon,
+  disabled = false,
+}: {
+  title: string
+  description: string
+  creator: string
+  iconSrc: string
+  href: string
+  actionText: string
+  actionIcon: React.ReactNode
+  disabled?: boolean
+}) {
+  return (
+    <div className="bg-white border-4 border-black p-4 group hover:bg-pink-50 transition-colors duration-200 relative flex flex-col">
+      <div className="absolute top-0 left-0 w-2 h-2 bg-black"></div>
+      <div className="absolute top-0 right-0 w-2 h-2 bg-black"></div>
+      <div className="absolute bottom-0 left-0 w-2 h-2 bg-black"></div>
+      <div className="absolute bottom-0 right-0 w-2 h-2 bg-black"></div>
+      <div className="flex-grow">
+        <div className="flex items-center gap-4 mb-2">
+          <div className="p-1 bg-gray-800 border-2 border-black rounded-xl overflow-hidden w-16 h-16 flex items-center justify-center flex-shrink-0">
+            <Image
+              src={iconSrc || "/placeholder.svg"}
+              alt={`${title} icon`}
+              width={64}
+              height={64}
+              className="rounded-lg"
+            />
+          </div>
+          <div>
+            <h3
+              className="font-bold text-black text-sm tracking-wide"
+              style={{ fontFamily: "var(--font-press-start-2p)" }}
+            >
+              {title.toUpperCase()}
+            </h3>
+            <p className="text-gray-600 text-xs tracking-wide">Created by {creator}</p>
+          </div>
+        </div>
+        <p className="text-gray-800 text-xs leading-relaxed mb-4">{description}</p>
+      </div>
+      <div className="relative group/btn mt-auto">
+        <div
+          className={`absolute inset-0 translate-y-2 ${disabled ? "bg-gray-400" : "bg-gray-700"} border-4 border-black`}
+        ></div>
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`block relative w-full ${disabled ? "bg-gray-500 cursor-not-allowed" : "bg-pink-500 group-hover/btn:translate-y-1 group-active/btn:translate-y-2 cursor-pointer"} border-4 border-black p-4 font-bold text-white transition-transform duration-100 text-center`}
+          style={{ fontFamily: "var(--font-press-start-2p)" }}
+          onClick={(e) => {
+            if (disabled) e.preventDefault()
+          }}
+        >
+          <div className="absolute top-0 left-0 w-2 h-2 bg-black"></div>
+          <div className="absolute top-0 right-0 w-2 h-2 bg-black"></div>
+          <div className="absolute bottom-0 left-0 w-2 h-2 bg-black"></div>
+          <div className="absolute bottom-0 right-0 w-2 h-2 bg-black"></div>
+          <span className="flex items-center justify-center text-sm">
+            {actionText}
+            {actionIcon}
+          </span>
+        </a>
       </div>
     </div>
   )
@@ -421,49 +497,25 @@ export function HomePage() {
             <div className="bg-black border-4 border-black p-1 mb-12">
               <div className="bg-pink-200 p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-white border-4 border-black p-4 group hover:bg-pink-50 transition-colors duration-200 relative flex flex-col">
-                    <div className="absolute top-0 left-0 w-2 h-2 bg-black"></div>
-                    <div className="absolute top-0 right-0 w-2 h-2 bg-black"></div>
-                    <div className="absolute bottom-0 left-0 w-2 h-2 bg-black"></div>
-                    <div className="absolute bottom-0 right-0 w-2 h-2 bg-black"></div>
-                    <div className="flex-grow">
-                      <div className="flex items-center gap-4 mb-2">
-                        <div className="p-2 bg-gray-200 border-2 border-black">
-                          <Rocket className="w-8 h-8 text-red-500" />
-                        </div>
-                        <div>
-                          <h3
-                            className="font-bold text-black text-sm tracking-wide"
-                            style={{ fontFamily: "var(--font-press-start-2p)" }}
-                          >
-                            LIFTOFF
-                          </h3>
-                        </div>
-                      </div>
-                      <p className="text-gray-800 text-xs leading-relaxed mb-4">
-                        Build. Boost. Blast or BOOM! The more honor dice you earn, the farther we can fly...
-                      </p>
-                    </div>
-                    <div className="relative group/btn mt-auto">
-                      <div className="absolute inset-0 translate-y-2 bg-gray-700 border-4 border-black"></div>
-                      <a
-                        href="https://playliftoff.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block relative w-full bg-pink-500 border-4 border-black p-4 font-bold text-white transition-transform duration-100 group-hover/btn:translate-y-1 group-active/btn:translate-y-2 cursor-pointer text-center"
-                        style={{ fontFamily: "var(--font-press-start-2p)" }}
-                      >
-                        <div className="absolute top-0 left-0 w-2 h-2 bg-black"></div>
-                        <div className="absolute top-0 right-0 w-2 h-2 bg-black"></div>
-                        <div className="absolute bottom-0 left-0 w-2 h-2 bg-black"></div>
-                        <div className="absolute bottom-0 right-0 w-2 h-2 bg-black"></div>
-                        <span className="flex items-center justify-center text-sm">
-                          PLAY
-                          <Play className="ml-2 w-4 h-4" />
-                        </span>
-                      </a>
-                    </div>
-                  </div>
+                  <MadeGameCard
+                    title="LIFTOFF"
+                    creator="Dan"
+                    description="Build. Boost. Blast or BOOM! The more honor dice you earn, the farther we can fly..."
+                    iconSrc="https://www.playliftoff.com/icon-192.png"
+                    href="https://playliftoff.com"
+                    actionText="PLAY"
+                    actionIcon={<Play className="ml-2 w-4 h-4" />}
+                  />
+                  <MadeGameCard
+                    title="The Googly Game"
+                    creator="Dan"
+                    description="Don't overthink it, just do the thing!"
+                    iconSrc="https://www.thegooglygame.com/icon-192.png"
+                    href="https://thegooglygame.com"
+                    actionText="PLAY"
+                    actionIcon={<Play className="ml-2 w-4 h-4" />}
+                    disabled={false}
+                  />
                 </div>
               </div>
             </div>
