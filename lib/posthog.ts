@@ -1,39 +1,28 @@
 "use client"
 
-import posthog from "posthog-js"
-
 /**
- * Return the global PostHog instance if it exists on the client.
- * If you need to ensure PostHog is initialised, do that in
- * `app/providers.tsx` (see PostHog’s official Next.js guide).
+ * Tiny helper around window.posthog so components can import
+ *   import { getPostHog, trackEvent, trackPageView } from '@/lib/posthog'
+ * without bundling the full SDK twice.
  */
-export function getPostHog() {
-  if (typeof window === "undefined") return null
-  return posthog
+
+type PostHogClient = {
+  capture: (event: string, properties?: Record<string, unknown>) => void
 }
 
-/**
- * Capture a single event if PostHog is ready.
- * Analytics errors must never break the UI.
- */
-export function trackEvent(eventName: string, properties: Record<string, any> = {}): void {
-  try {
-    if (typeof posthog.capture === "function") {
-      posthog.capture(eventName, properties)
-    }
-  } catch (err) {
-    if (process.env.NODE_ENV === "development") {
-      // eslint-disable-next-line no-console
-      console.warn("[PostHog] trackEvent failed", err)
-    }
-  }
+/** Safely grab the global PostHog instance (or undefined in SSR / if not loaded). */
+export function getPostHog(): PostHogClient | undefined {
+  if (typeof window === "undefined") return undefined
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  return (window as any).posthog as PostHogClient | undefined
 }
 
-/**
- * Convenience helper for page-view tracking.
- * Call this from a client component after route changes
- * (or rely on PostHog’s automatic capture).
- */
-export function trackPageView(url = window.location.href): void {
-  trackEvent("$pageview", { $current_url: url })
+/** Fire a custom event – fails silently if PostHog isn’t ready. */
+export function trackEvent(event: string, properties: Record<string, unknown> = {}) {
+  getPostHog()?.capture(event, properties)
+}
+
+/** Convenience wrapper for a page-view event. */
+export function trackPageView() {
+  getPostHog()?.capture("$pageview")
 }
