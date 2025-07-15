@@ -7,41 +7,46 @@ import { usePathname, useSearchParams } from "next/navigation"
 import posthog from "posthog-js"
 import { PostHogProvider as PHProvider } from "posthog-js/react"
 
-type Config = { key: string; host: string }
-
-async function fetchConfig(): Promise<Config> {
+/**
+ * Fetch key/host from a server-only route to avoid hard-coding env vars
+ * into the client bundle (keeps Vercel happy).
+ */
+async function fetchConfig() {
   const res = await fetch("/api/posthog-config")
-  if (!res.ok) throw new Error("Failed to fetch PostHog config")
-  return res.json()
+  if (!res.ok) throw new Error("Failed to load PostHog config")
+  return (await res.json()) as { key: string; host: string }
 }
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false)
   const pathname = usePathname()
-  const search = useSearchParams()
+  const searchParams = useSearchParams()
 
-  /* Initialise once */
+  // Initialise PostHog once
   useEffect(() => {
+    if (ready) return
     fetchConfig()
       .then(({ key, host }) => {
         posthog.init(key, {
-          api_host: host,
+          api_host: host || "https://us.i.posthog.com",
+          capture_pageview: false, // we’ll send it ourselves
           loaded: (ph) => {
             if (process.env.NODE_ENV === "development") ph.debug()
+            ph.capture("$pageview")
+            setReady(true)
           },
         })
-        setReady(true)
       })
       .catch((err) => {
         console.error("PostHog init failed", err)
       })
-  }, [])
+  }, [ready])
 
-  /* Track page views whenever the route or query string changes */
+  // Track client-side navigations (after PostHog is ready)
   useEffect(() => {
-    if (ready) posthog.capture("$pageview")
-  }, [ready, pathname, search?.toString()])
+    if (!ready) return
+    posthog.capture("$pageview", { pathname, search: searchParams.toString() })
+  }, [pathname, searchParams, ready])
 
-  /* Render children immediately; wrap with PHProvider only once ready */
-  return ready ? <PHProvider client={posthog}>{children}</PHProvider> : <>{children}</>
+  return <PHProvider client={posthog}>{children}</PHProvider>
 }

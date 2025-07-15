@@ -1,28 +1,17 @@
 "use client"
 
-/**
- * Tiny helper around window.posthog so components can import
- *   import { getPostHog, trackEvent, trackPageView } from '@/lib/posthog'
- * without bundling the full SDK twice.
- */
+import posthog from "posthog-js"
 
-type PostHogClient = {
-  capture: (event: string, properties?: Record<string, unknown>) => void
+export function getPostHog() {
+  return posthog
 }
 
-/** Safely grab the global PostHog instance (or undefined in SSR / if not loaded). */
-export function getPostHog(): PostHogClient | undefined {
-  if (typeof window === "undefined") return undefined
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  return (window as any).posthog as PostHogClient | undefined
+export function trackEvent(event: string, props?: Record<string, unknown>) {
+  if (typeof window !== "undefined") {
+    posthog.capture(event, props)
+  }
 }
 
-/** Fire a custom event – fails silently if PostHog isn’t ready. */
-export function trackEvent(event: string, properties: Record<string, unknown> = {}) {
-  getPostHog()?.capture(event, properties)
-}
-
-/** Convenience wrapper for a page-view event. */
-export function trackPageView() {
-  getPostHog()?.capture("$pageview")
+export function trackPageView(props?: Record<string, unknown>) {
+  trackEvent("$pageview", props)
 }
