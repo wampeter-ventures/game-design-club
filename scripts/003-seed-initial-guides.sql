@@ -7,6 +7,8 @@ INSERT INTO guides (slug, game_name, guide_data, is_pinned) VALUES
   "gameName": "Settlers of Catan",
   "creatorName": "RDS Game Club",
   "gameSubtitle": "A game of trading, building, and settling an uncharted island.",
+  "imageUrl": null,
+  "fallbackIcon": "Dice5",
   "thinkAndShare": [
     "Favorite part of playing Catan?",
     "What is one thing YOU would change or add?"
@@ -29,6 +31,8 @@ $$, true),
   "gameName": "Legends of Andor",
   "creatorName": "RDS Game Club",
   "gameSubtitle": "A cooperative fantasy adventure to defend a realm and rescue wolf cubs.",
+  "imageUrl": null,
+  "fallbackIcon": "Mountain",
   "thinkAndShare": [
     "How did your team work together to beat the dragon?",
     "If you could add a new hero to the game, what would their special power be?"
@@ -51,20 +55,22 @@ $$, true),
   "gameName": "Machi Koro",
   "creatorName": "RDS Game Club",
   "gameSubtitle": "A fast-paced game of dice rolling and city building to construct landmarks.",
+  "imageUrl": null,
+  "fallbackIcon": "Building2",
   "thinkAndShare": [
     "What new card or card combo would you add?",
     "What about this game is fun?"
   ],
   "allMechanics": [
-    { "id": 1, "column": "biggest_ideas", "icon": "Landmark", "title": "Build to Win", "subTitle": "Set Collection + Progression", "gameRule": "The first player to build all their landmarks wins!", "strategyTip": "Build in a smart order. Start with landmarks that boost your income or unlock key abilities.", "whatItMeans": "You’re building landmarks in your city. Each one unlocks a new power and gets you closer to winning!" },
+    { "id": 1, "column": "biggest_ideas", "icon": "Landmark", "title": "Build to Win", "subTitle": "Set Collection + Progression", "gameRule": "The first player to build all their landmarks wins!", "strategyTip": "Build in a smart order. Start with landmarks that boost your income or unlock key abilities.", "whatItMeans": "You're building landmarks in your city. Each one unlocks a new power and gets you closer to winning!" },
     { "id": 10, "column": "biggest_ideas", "icon": "Store", "title": "The Shared Shop", "subTitle": "Drafting", "gameRule": "The marketplace has a limited supply of each card. Once they're gone, they're gone.", "strategyTip": "Plan ahead for the second stage of the game where pairs of cards work together.", "whatItMeans": "Everyone buys from the same shared shop. Every card you buy is one your opponents can't have!" },
-    { "id": 3, "column": "biggest_ideas", "icon": "Dice", "title": "Make Your Luck", "subTitle": "Randomness + Smart Planning", "gameRule": "You start rolling 1 die. After you build the 🚉 Train Station, you can roll 2 dice. With two dice, numbers like 6, 7, and 8 become the most common.", "strategyTip": "At first, numbers 1–6 are equally likely—but once two dice are in play, the odds will change. Plan ahead!", "whatItMeans": "You can’t control the dice, but you can choose cards that make the most of whatever numbers come up. Your choices shape how 'lucky' you get." },
+    { "id": 3, "column": "biggest_ideas", "icon": "Dice", "title": "Make Your Luck", "subTitle": "Randomness + Smart Planning", "gameRule": "You start rolling 1 die. After you build the 🚉 Train Station, you can roll 2 dice. With two dice, numbers like 6, 7, and 8 become the most common.", "strategyTip": "At first, numbers 1–6 are equally likely—but once two dice are in play, the odds will change. Plan ahead!", "whatItMeans": "You can't control the dice, but you can choose cards that make the most of whatever numbers come up. Your choices shape how 'lucky' you get." },
     { "id": 4, "column": "more_mechanics", "icon": "Puzzle", "title": "Combo Power", "subTitle": "Synergy + Engine Building", "gameRule": "The Cheese Factory earns more coins if you have lots of 🐄 Ranches. Stack them!", "strategyTip": "Look for pairs—like Factories and the basic cards they feed on.", "whatItMeans": "Some cards give extra coins based on how many of another card you own." },
-    { "id": 5, "column": "more_mechanics", "icon": "Users", "title": "Take That!", "subTitle": "Player Interaction", "gameRule": "Red cards trigger on other players’ turns. Purple cards let you target someone directly.", "strategyTip": "Play mean when someone’s close to winning—or just to even things up.", "whatItMeans": "Some cards steal from other players or block them. Use them to slow down leaders!" },
-    { "id": 2, "column": "more_mechanics", "icon": "Coins", "title": "Passive Income", "subTitle": "Engine Building + Non-Turn Interaction", "gameRule": "Blue cards give you coins whenever their number is rolled, even on another player’s turn.", "strategyTip": "Get lots of cards that trigger often. That way, you’re always earning!", "whatItMeans": "You can earn coins even when it’s not your turn—if the dice roll matches your cards." },
-    { "id": 7, "column": "secret_sauce", "icon": "Key", "title": "Unlocking", "subTitle": "Player-Gated Progression", "gameRule": "After you build the 🚉 Train Station, you can choose to roll 1 or 2 dice. That opens up high-number cards (7–12).", "strategyTip": "Don’t rush it! Unlock 2-dice mode only when your cards are ready for it.", "whatItMeans": "Some parts of the game stay locked until you build something special to unlock them—like rolling 2 dice." },
-    { "id": 8, "column": "secret_sauce", "icon": "Palette", "title": "Beauty & Color", "subTitle": "Visual Language", "gameRule": "Every card is color-coded and has fun, simple art to help you know what it does at a glance.", "strategyTip": "Each card color has meaning: Blue = always, Red = opponents’ turn, Green = your turn, Purple = special powers.", "whatItMeans": "The game’s bright colors and clean icons help your brain understand things quickly—and make it more fun!" },
-    { "id": 9, "column": "secret_sauce", "icon": "Repeat", "title": "One Goal, Many Paths", "subTitle": "Replayability + Strategy Variety", "gameRule": "Everyone has the same goal: build your landmarks. But the cards you collect change how you get there.", "strategyTip": "Try different builds each time. There’s no perfect path, only clever combos.", "whatItMeans": "Everyone is trying to do the same thing—but there are many ways to get there!" }
+    { "id": 5, "column": "more_mechanics", "icon": "Users", "title": "Take That!", "subTitle": "Player Interaction", "gameRule": "Red cards trigger on other players' turns. Purple cards let you target someone directly.", "strategyTip": "Play mean when someone's close to winning—or just to even things up.", "whatItMeans": "Some cards steal from other players or block them. Use them to slow down leaders!" },
+    { "id": 2, "column": "more_mechanics", "icon": "Coins", "title": "Passive Income", "subTitle": "Engine Building + Non-Turn Interaction", "gameRule": "Blue cards give you coins whenever their number is rolled, even on another player's turn.", "strategyTip": "Get lots of cards that trigger often. That way, you're always earning!", "whatItMeans": "You can earn coins even when it's not your turn—if the dice roll matches your cards." },
+    { "id": 7, "column": "secret_sauce", "icon": "Key", "title": "Unlocking", "subTitle": "Player-Gated Progression", "gameRule": "After you build the 🚉 Train Station, you can choose to roll 1 or 2 dice. That opens up high-number cards (7–12).", "strategyTip": "Don't rush it! Unlock 2-dice mode only when your cards are ready for it.", "whatItMeans": "Some parts of the game stay locked until you build something special to unlock them—like rolling 2 dice." },
+    { "id": 8, "column": "secret_sauce", "icon": "Palette", "title": "Beauty & Color", "subTitle": "Visual Language", "gameRule": "Every card is color-coded and has fun, simple art to help you know what it does at a glance.", "strategyTip": "Each card color has meaning: Blue = always, Red = opponents' turn, Green = your turn, Purple = special powers.", "whatItMeans": "The game's bright colors and clean icons help your brain understand things quickly—and make it more fun!" },
+    { "id": 9, "column": "secret_sauce", "icon": "Repeat", "title": "One Goal, Many Paths", "subTitle": "Replayability + Strategy Variety", "gameRule": "Everyone has the same goal: build your landmarks. But the cards you collect change how you get there.", "strategyTip": "Try different builds each time. There's no perfect path, only clever combos.", "whatItMeans": "Everyone is trying to do the same thing—but there are many ways to get there!" }
   ]
 }
 $$, true),
@@ -73,6 +79,8 @@ $$, true),
   "gameName": "Azul",
   "creatorName": "RDS Game Club",
   "gameSubtitle": "An elegant game of pattern building and competitive tile drafting.",
+  "imageUrl": null,
+  "fallbackIcon": "LayoutGrid",
   "thinkAndShare": [
     "If you could add one rule or special tile, what would it be?",
     "What is fun about Azul?"

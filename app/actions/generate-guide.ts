@@ -23,6 +23,8 @@ You must return ONLY a valid JSON object. Do not include any other text, markdow
 {
 "gameName": "string",
 "gameSubtitle": "string (a fun, one-sentence description of the game, e.g., 'A game of trading, building, and settling an uncharted island.')",
+"imageUrl": "string (a publicly accessible image URL for the game box art or game components, or null if none found)",
+"fallbackIcon": "string (name of a lucide-react icon that represents the game theme, e.g., 'Dice5', 'Castle', 'Sword')",
 "allMechanics": [
   {
     "id": "number",
@@ -47,9 +49,11 @@ You must return ONLY a valid JSON object. Do not include any other text, markdow
 ### 📋 Content Requirements
 1.  **gameName:** The official name of the game.
 2.  **gameSubtitle:** A fun, descriptive, one-sentence subtitle for the game.
-3.  **allMechanics:** An array of exactly 9 unique mechanic objects.
+3.  **imageUrl:** Try to find a publicly accessible image URL for the game's box art or components. Use null if you cannot find a reliable public image URL.
+4.  **fallbackIcon:** Choose a lucide-react icon name that best represents the game's theme or main mechanic (e.g., 'Castle' for medieval games, 'Rocket' for space games, 'Dice5' for dice games).
+5.  **allMechanics:** An array of exactly 9 unique mechanic objects.
   -   Distribute them evenly: 3 for \`biggest_ideas\`, 3 for \`more_mechanics\`, 3 for \`secret_sauce\`.
-4.  **thinkAndShare:** An array of exactly 2 question strings.
+6.  **thinkAndShare:** An array of exactly 2 question strings.
 
 ---
 
@@ -60,6 +64,7 @@ You must return ONLY a valid JSON object. Do not include any other text, markdow
 - Are there exactly 2 questions?
 - Does the language have that cheeky, energizing tone for smart 10-year-olds?
 - Am I teaching game design fundamentals in kid-friendly language?
+- Have I included an appropriate imageUrl (or null) and fallbackIcon?
 
 Ready? Let's go!
 `

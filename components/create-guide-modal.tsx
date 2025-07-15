@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { generateGuideAction } from "@/app/actions/generate-guide"
 import { Loader2 } from "lucide-react"
+import { trackEvent } from "@/lib/posthog"
 
 interface CreateGuideModalProps {
   isOpen: boolean
@@ -58,14 +59,35 @@ export function CreateGuideModal({
     setError(null)
 
     const formData = new FormData(event.currentTarget)
+    const gameName = formData.get("gameName") as string
+    const creatorName = formData.get("creatorName") as string
+    const notes = formData.get("notes") as string
+
+    trackEvent("guide_generation_started", {
+      game_name: gameName,
+      creator_name: creatorName,
+      has_notes: !!notes,
+      notes_length: notes?.length || 0,
+    })
+
     const result = await generateGuideAction(formData)
 
     setIsGenerating(false)
 
     if (result.success && result.data && result.slug) {
+      trackEvent("guide_generation_completed", {
+        game_name: gameName,
+        slug: result.slug,
+        success: true,
+      })
       onGenerationComplete({ data: result.data, slug: result.slug })
     } else {
       const errorMessage = result.error || "An unknown error occurred. No specific reason was provided by the server."
+      trackEvent("guide_generation_failed", {
+        game_name: gameName,
+        error: errorMessage,
+        success: false,
+      })
       setError(errorMessage)
     }
   }

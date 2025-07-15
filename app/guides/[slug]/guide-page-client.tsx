@@ -2,7 +2,10 @@
 
 import * as Lucide from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
+import { trackEvent } from "@/lib/posthog"
 
 export interface Mechanic {
   id: number
@@ -19,6 +22,8 @@ export interface GuideData {
   gameName: string
   gameSubtitle: string
   creatorName?: string
+  imageUrl?: string
+  fallbackIcon?: string
   allMechanics: Mechanic[]
   thinkAndShare: string[]
 }
@@ -47,7 +52,7 @@ function MechanicCard({ mechanic, color }: { mechanic: Mechanic; color: string }
           {mechanic.title}
         </h4>
         <p className="text-xs text-slate-500 mb-1">
-          <Lucide.GraduationCap className="w-4 h-4 inline-block mr-1" />“{mechanic.subTitle}”
+          <Lucide.GraduationCap className="w-4 h-4 inline-block mr-1" />"{mechanic.subTitle}"
         </p>
         <div className="text-xs space-y-2">
           <p>
@@ -69,16 +74,36 @@ function MechanicCard({ mechanic, color }: { mechanic: Mechanic; color: string }
 }
 
 export default function GuidePageClient({ guideData }: { guideData: GuideData }) {
+  const [imageError, setImageError] = useState(false)
+
+  useEffect(() => {
+    trackEvent("guide_page_viewed", {
+      game_name: guideData.gameName,
+      creator_name: guideData.creatorName,
+      has_image: !!guideData.imageUrl,
+      mechanics_count: guideData.allMechanics?.length || 0,
+    })
+  }, [guideData])
+
   const col1 = guideData.allMechanics.filter((m) => m.column === "biggest_ideas")
   const col2 = guideData.allMechanics.filter((m) => m.column === "more_mechanics" || m.column === "mid_sized")
   const col3 = guideData.allMechanics.filter((m) => m.column === "secret_sauce")
+
+  // Get fallback icon
+  const FallbackIcon = (Lucide as any)[guideData.fallbackIcon || "Wand2"] || Lucide.Wand2
 
   return (
     <div className="min-h-screen bg-yellow-200 p-2 md:p-4 print:bg-white">
       <div className="w-full max-w-7xl mx-auto relative">
         {/* PRINT BUTTON */}
         <Button
-          onClick={() => window.print()}
+          onClick={() => {
+            trackEvent("guide_printed", {
+              game_name: guideData.gameName,
+              creator_name: guideData.creatorName,
+            })
+            window.print()
+          }}
           className="print:hidden absolute top-0 right-0 bg-black text-white hover:bg-slate-800 mb-2"
           size="sm"
         >
@@ -96,12 +121,30 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
 
         <div className="bg-white border-4 border-black p-3 md:p-5 shadow-lg mt-10">
           <header className="text-center mb-4 border-b-4 border-black pb-3">
-            <h1 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: "'Press Start 2P', monospace" }}>
-              {guideData.gameName}
-            </h1>
-            <p className="text-sm md:text-base text-gray-700" style={{ fontFamily: "'Press Start 2P', monospace" }}>
-              {guideData.gameSubtitle}
-            </p>
+            <div className="flex items-center justify-center gap-4 mb-2">
+              {guideData.imageUrl && !imageError ? (
+                <Image
+                  src={guideData.imageUrl || "/placeholder.svg"}
+                  alt={`${guideData.gameName} game image`}
+                  width={64}
+                  height={64}
+                  className="object-contain border-2 border-black"
+                  onError={() => setImageError(true)}
+                />
+              ) : (
+                <div className="p-2 bg-gray-200 border-2 border-black">
+                  <FallbackIcon className="w-8 h-8 text-purple-600" />
+                </div>
+              )}
+              <div>
+                <h1 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: "'Press Start 2P', monospace" }}>
+                  {guideData.gameName}
+                </h1>
+                <p className="text-sm md:text-base text-gray-700" style={{ fontFamily: "'Press Start 2P', monospace" }}>
+                  {guideData.gameSubtitle}
+                </p>
+              </div>
+            </div>
           </header>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

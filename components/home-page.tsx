@@ -21,6 +21,7 @@ import {
   ShieldCheck,
   X,
 } from "lucide-react"
+import * as Lucide from "lucide-react"
 import { useRouter } from "next/navigation"
 import { CreateGuideModal } from "@/components/create-guide-modal"
 import {
@@ -29,6 +30,7 @@ import {
   togglePinAction,
   deleteGuideAction,
 } from "@/app/actions/guide-actions"
+import { trackEvent } from "@/lib/posthog"
 
 // Game-themed falling objects
 const fallingObjects = [
@@ -105,12 +107,21 @@ function TetorisGameCard({
 }: TetorisGameCardProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const [imageError, setImageError] = useState(false)
 
   const guideData = game.guide_data || {}
   const description = guideData.gameSubtitle || `An AI-generated guide for ${game.game_name}.`
   const creatorName = guideData.creatorName
+  const imageUrl = guideData.imageUrl
+  const fallbackIcon = guideData.fallbackIcon || "Wand2"
 
   const handleNavigation = () => {
+    trackEvent("guide_viewed", {
+      game_name: game.game_name,
+      slug: game.slug,
+      is_pinned: game.is_pinned,
+      source: game.is_pinned ? "pinned_games" : "generated_guides",
+    })
     router.push(`/guides/${game.slug}`)
   }
 
@@ -126,6 +137,7 @@ function TetorisGameCard({
     }
   }
 
+  // Predefined icons for known games
   const iconMap: { [key: string]: React.ReactNode } = {
     "settlers-of-catan": <Dice5 className="w-8 h-8 text-orange-600" />,
     "legends-of-andor": <Mountain className="w-8 h-8 text-emerald-600" />,
@@ -134,7 +146,9 @@ function TetorisGameCard({
     liftoff: <Rocket className="w-8 h-8 text-red-500" />,
   }
 
-  const icon = iconMap[game.slug] || <Wand2 className="w-8 h-8 text-purple-600" />
+  // Get the fallback icon component
+  const FallbackIcon = (Lucide as any)[fallbackIcon] || Wand2
+  const defaultIcon = iconMap[game.slug] || <FallbackIcon className="w-8 h-8 text-purple-600" />
 
   return (
     <div className="bg-white border-4 border-black p-4 group hover:bg-yellow-50 transition-colors duration-200 relative flex flex-col">
@@ -161,7 +175,20 @@ function TetorisGameCard({
 
       <div className="flex-grow">
         <div className="flex items-center gap-4 mb-2">
-          <div className="p-2 bg-gray-200 border-2 border-black">{icon}</div>
+          <div className="p-2 bg-gray-200 border-2 border-black w-16 h-16 flex items-center justify-center">
+            {imageUrl && !imageError ? (
+              <Image
+                src={imageUrl || "/placeholder.svg"}
+                alt={`${game.game_name} game image`}
+                width={48}
+                height={48}
+                className="object-contain"
+                onError={() => setImageError(true)}
+              />
+            ) : (
+              defaultIcon
+            )}
+          </div>
           <div>
             <h3
               className="font-bold text-black text-sm tracking-wide"
@@ -329,6 +356,11 @@ export function HomePage() {
   }, [])
 
   const handleGenerationComplete = (result: { slug: string; data: any }) => {
+    trackEvent("guide_generated", {
+      game_name: result.data.gameName,
+      slug: result.slug,
+      creator: result.data.creatorName,
+    })
     setIsModalOpen(false)
     fetchGuides() // Refetch guides to show the new one
     router.push(`/guides/${result.slug}`)
@@ -342,6 +374,11 @@ export function HomePage() {
   const handleDelete = async (slug: string) => {
     await deleteGuideAction(slug)
     fetchGuides()
+  }
+
+  const handleAgreementsClick = () => {
+    trackEvent("agreements_viewed")
+    setIsAgreementsModalOpen(true)
   }
 
   useEffect(() => {
@@ -393,7 +430,7 @@ export function HomePage() {
         {isAgreementsModalOpen && <AgreementsModal onClose={() => setIsAgreementsModalOpen(false)} />}
 
         <div className="hidden md:block absolute top-4 right-4 z-30">
-          <AgreementsSticker onClick={() => setIsAgreementsModalOpen(true)} />
+          <AgreementsSticker onClick={handleAgreementsClick} />
         </div>
 
         <div className="fixed inset-0 pointer-events-none z-10 opacity-80">
@@ -448,7 +485,7 @@ export function HomePage() {
 
           <main className="w-full max-w-6xl">
             <div className="flex justify-center mb-8 md:hidden">
-              <AgreementsSticker onClick={() => setIsAgreementsModalOpen(true)} />
+              <AgreementsSticker onClick={handleAgreementsClick} />
             </div>
 
             <div className="text-center">
@@ -534,7 +571,12 @@ export function HomePage() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <div
                     className="bg-white border-4 border-black p-4 relative group hover:bg-green-100 transition-colors duration-200 cursor-pointer flex flex-col"
-                    onClick={() => !isGenerating && setIsModalOpen(true)}
+                    onClick={() => {
+                      if (!isGenerating) {
+                        trackEvent("create_guide_modal_opened")
+                        setIsModalOpen(true)
+                      }
+                    }}
                   >
                     <div className="absolute top-0 left-0 w-2 h-2 bg-black"></div>
                     <div className="absolute top-0 right-0 w-2 h-2 bg-black"></div>
@@ -669,9 +711,14 @@ export function HomePage() {
               onClick={() => {
                 const password = prompt("Enter admin password:")
                 if (password === "gamedesign") {
-                  setIsAdmin(!isAdmin)
+                  const newAdminState = !isAdmin
+                  setIsAdmin(newAdminState)
+                  trackEvent("admin_mode_toggled", {
+                    enabled: newAdminState,
+                  })
                 } else if (password) {
                   alert("Incorrect password.")
+                  trackEvent("admin_login_failed")
                 }
               }}
               className="bg-black text-white border-2 border-white p-2 hover:bg-gray-700"
