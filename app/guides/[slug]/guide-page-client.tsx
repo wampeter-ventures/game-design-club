@@ -93,7 +93,7 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
   const FallbackIcon = (Lucide as any)[guideData.fallbackIcon || "Wand2"] || Lucide.Wand2
 
   return (
-    <div className="min-h-screen bg-yellow-200 p-2 md:p-4 print:bg-white">
+    <div className="min-h-screen bg-yellow-200 p-2 md:p-4">
       <div className="w-full max-w-7xl mx-auto relative">
         {/* PRINT BUTTON */}
         <Button
@@ -119,8 +119,8 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
           &lt; HOME
         </Link>
 
-        <div className="bg-white border-4 border-black p-3 md:p-5 shadow-lg mt-10">
-          <header className="text-center mb-4 border-b-4 border-black pb-3">
+        <div className="bg-white border-4 border-black print:border-black p-3 md:p-5 shadow-lg print:shadow-none mt-10">
+          <header className="text-center mb-4 border-b-4 border-black print:border-black pb-3">
             <div className="flex items-center justify-center gap-4 mb-2">
               {guideData.imageUrl && !imageError ? (
                 <Image
@@ -147,10 +147,10 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
             </div>
           </header>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 print:grid-cols-3 gap-4 print:gap-4">
             {/* BIGGEST IDEAS */}
             <div>
-              <h2 className="flex items-center bg-orange-400 border-2 border-black text-white p-2 font-semibold text-sm md:text-base">
+              <h2 className="flex items-center bg-orange-400 print:bg-orange-400 border-2 border-black text-white p-2 font-semibold text-sm md:text-base">
                 <Lucide.Brain className="w-5 h-5 mr-2" /> BIGGEST IDEAS
               </h2>
               <div className="flex flex-col gap-3 mt-2">
@@ -162,7 +162,7 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
 
             {/* MORE MECHANICS */}
             <div>
-              <h2 className="flex items-center bg-blue-400 border-2 border-black text-white p-2 font-semibold text-sm md:text-base">
+              <h2 className="flex items-center bg-blue-400 print:bg-blue-400 border-2 border-black text-white p-2 font-semibold text-sm md:text-base">
                 <Lucide.ListChecks className="w-5 h-5 mr-2" /> MORE MECHANICS
               </h2>
               <div className="flex flex-col gap-3 mt-2">
@@ -174,7 +174,7 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
 
             {/* SECRET SAUCE */}
             <div>
-              <h2 className="flex items-center bg-purple-400 border-2 border-black text-white p-2 font-semibold text-sm md:text-base">
+              <h2 className="flex items-center bg-purple-400 print:bg-purple-400 border-2 border-black text-white p-2 font-semibold text-sm md:text-base">
                 <Lucide.Search className="w-5 h-5 mr-2" /> SECRET SAUCE
               </h2>
               <div className="flex flex-col gap-3 mt-2">
@@ -185,7 +185,7 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
             </div>
 
             {/* THINK & SHARE */}
-            <div className="md:col-span-3 mt-4 bg-pink-200 border-2 border-black p-3 rounded-md">
+            <div className="md:col-span-3 mt-4 bg-pink-200 print:bg-pink-200 border-2 border-black print:border-black p-3 rounded-md">
               <h3 className="flex items-center font-semibold text-sm md:text-base mb-2">
                 <Lucide.Sparkles className="w-4 h-4 mr-1" /> THINK & SHARE!
               </h3>
@@ -199,7 +199,7 @@ export default function GuidePageClient({ guideData }: { guideData: GuideData })
           </div>
 
           <footer
-            className="text-center mt-6 pt-4 border-t-4 border-black text-xs md:text-sm"
+            className="text-center mt-6 pt-4 border-t-4 border-black print:border-black text-xs md:text-sm"
             style={{ fontFamily: "'Press Start 2P', monospace" }}
           >
             RDS Game Design Club • 2025

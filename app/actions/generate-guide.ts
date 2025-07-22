@@ -16,6 +16,18 @@ Generate a JSON object containing all the data needed to populate a worksheet fo
 
 ---
 
+## ⚠️ Error Handling
+If you do not have enough information about '[GameName]' to create a high-quality, accurate worksheet based on the requirements, you MUST return the following JSON object and nothing else:
+
+\`\`\`json
+{
+  "error": "insufficient_information",
+  "message": "I don't know enough about this game. Please provide more notes."
+}
+\`\`\`
+
+---
+
 ## 📦 Required JSON Output Format
 You must return ONLY a valid JSON object. Do not include any other text, markdown, or explanations.
 
@@ -120,6 +132,16 @@ export async function generateGuideAction(formData: FormData) {
 
     const guideData = parsed.data as any
     console.log("--- Parsed Guide Data ---", guideData)
+
+    if (guideData.error === "insufficient_information") {
+      console.log("--- AI needs more information ---")
+      return {
+        success: false,
+        error: "insufficient_information",
+        message:
+          "I don't know enough about this game to generate a game design guide. Can you share more notes about this game? Feel free to copy and paste anything from the web.",
+      }
+    }
 
     if (!guideData || typeof guideData !== "object") {
       throw new Error("Parsed data is not a valid object.")

@@ -82,7 +82,9 @@ export function CreateGuideModal({
       })
       onGenerationComplete({ data: result.data, slug: result.slug })
     } else {
-      const errorMessage = result.error || "An unknown error occurred. No specific reason was provided by the server."
+      // Use the specific message from the server action if available
+      const errorMessage =
+        result.message || result.error || "An unknown error occurred. No specific reason was provided by the server."
       trackEvent("guide_generation_failed", {
         game_name: gameName,
         error: errorMessage,
