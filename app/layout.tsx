@@ -16,9 +16,20 @@ const pressStart2P = Press_Start_2P({
 })
 
 export const metadata: Metadata = {
-  title: "RDS Game Design Club",
-  description: "Summer 2025 • Learn game design through play and analysis",
+  title: "Game Design Club",
+  description: "Play more games • Make more games",
   generator: "v0.dev",
+  openGraph: {
+    images: "/IMG_6499.png",
+    title: "Game Design Club",
+    description: "Play more games • Make more games",
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: "/IMG_6499.png",
+    title: "Game Design Club",
+    description: "Play more games • Make more games",
+  },
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
