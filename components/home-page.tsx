@@ -476,10 +476,10 @@ export function HomePage() {
               className="text-2xl md:text-4xl font-bold text-black mb-4 tracking-wider"
               style={{ fontFamily: "var(--font-press-start-2p)" }}
             >
-              RDS GAME DESIGN CLUB
+              GAME DESIGN CLUB
             </h1>
             <p className="text-lg text-gray-800 tracking-wide" style={{ fontFamily: "var(--font-press-start-2p)" }}>
-              SUMMER 2025
+              RDS | SUMMER 2025
             </p>
           </header>
 
