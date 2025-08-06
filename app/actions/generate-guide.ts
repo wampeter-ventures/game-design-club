@@ -56,6 +56,8 @@ You must return ONLY a valid JSON object. Do not include any other text, markdow
 }
 \`\`\`
 
+Remember: the subtitles in quotes are meant to be universal game principles and game design mechanics, not game-specific lingo. The goal is to use this guide to drive a conversation about how and where certain universal game design principles were uniquely applied to this game in particular, while teaching the concept of the game design principles and game design dynamics.
+
 ---
 
 ### 📋 Content Requirements
