@@ -487,9 +487,56 @@ export function HomePage() {
             <div className="flex justify-center mb-8 md:hidden">
               <AgreementsSticker onClick={handleAgreementsClick} />
             </div>
+            <nav className="mb-8">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div className="relative group w-full sm:w-auto">
+                  <div className="absolute inset-0 translate-y-2 bg-gray-700 border-4 border-black" />
+                  <a
+                    href="#games"
+                    className="relative block bg-purple-500 border-4 border-black py-3 px-4 font-bold text-white text-center transition-transform duration-100 group-hover:translate-y-1 group-active:translate-y-2"
+                    style={{ fontFamily: "var(--font-press-start-2p)", fontSize: "12px" }}
+                  >
+                    <div className="absolute top-0 left-0 w-2 h-2 bg-black" />
+                    <div className="absolute top-0 right-0 w-2 h-2 bg-black" />
+                    <div className="absolute bottom-0 left-0 w-2 h-2 bg-black" />
+                    <div className="absolute bottom-0 right-0 w-2 h-2 bg-black" />
+                    GUIDES
+                  </a>
+                </div>
+                <div className="relative group w-full sm:w-auto">
+                  <div className="absolute inset-0 translate-y-2 bg-gray-700 border-4 border-black" />
+                  <a
+                    href="#games-made"
+                    className="relative block bg-blue-500 border-4 border-black py-3 px-4 font-bold text-white text-center transition-transform duration-100 group-hover:translate-y-1 group-active:translate-y-2"
+                    style={{ fontFamily: "var(--font-press-start-2p)", fontSize: "12px" }}
+                  >
+                    <div className="absolute top-0 left-0 w-2 h-2 bg-black" />
+                    <div className="absolute top-0 right-0 w-2 h-2 bg-black" />
+                    <div className="absolute bottom-0 left-0 w-2 h-2 bg-black" />
+                    <div className="absolute bottom-0 right-0 w-2 h-2 bg-black" />
+                    GAMES
+                  </a>
+                </div>
+                <div className="relative group w-full sm:w-auto">
+                  <div className="absolute inset-0 translate-y-2 bg-gray-700 border-4 border-black" />
+                  <a
+                    href="#create"
+                    className="relative block bg-green-500 border-4 border-black py-3 px-4 font-bold text-white text-center transition-transform duration-100 group-hover:translate-y-1 group-active:translate-y-2"
+                    style={{ fontFamily: "var(--font-press-start-2p)", fontSize: "12px" }}
+                  >
+                    <div className="absolute top-0 left-0 w-2 h-2 bg-black" />
+                    <div className="absolute top-0 right-0 w-2 h-2 bg-black" />
+                    <div className="absolute bottom-0 left-0 w-2 h-2 bg-black" />
+                    <div className="absolute bottom-0 right-0 w-2 h-2 bg-black" />
+                    CREATE YOUR OWN
+                  </a>
+                </div>
+              </div>
+            </nav>
 
             <div className="text-center">
               <h2
+                id="games"
                 className="text-2xl font-bold text-black mb-4 flex items-center justify-center gap-3 tracking-wide"
                 style={{ fontFamily: "var(--font-press-start-2p)" }}
               >
@@ -524,6 +571,7 @@ export function HomePage() {
 
             <div className="text-center">
               <h2
+                id="games-made"
                 className="text-2xl font-bold text-black mb-4 flex items-center justify-center gap-3 tracking-wide"
                 style={{ fontFamily: "var(--font-press-start-2p)" }}
               >
@@ -559,6 +607,7 @@ export function HomePage() {
 
             <div className="text-center">
               <h2
+                id="create"
                 className="text-2xl font-bold text-black mb-4 flex items-center justify-center gap-3 tracking-wide"
                 style={{ fontFamily: "var(--font-press-start-2p)" }}
               >
@@ -666,6 +715,7 @@ export function HomePage() {
 
             <div className="text-center">
               <h2
+                id="guides"
                 className="text-2xl font-bold text-black mb-4 flex items-center justify-center gap-3 tracking-wide"
                 style={{ fontFamily: "var(--font-press-start-2p)" }}
               >
